@@ -128,6 +128,15 @@ def Procesar_CSV(Archivos : list):
         # Renomrar las columnas de Provincias y Tipo_DOC a sus nombres originales
         Provincias.rename(columns={'Código Provincia': 'Código '} , inplace=True)
 
+        # Si la 'Letra CBTE' es 'B'o 'C' entonces la 'Alicuota IVA' es 0
+        Compras_Ordenado.loc[Compras_Ordenado['Letra CBTE'].isin(['B' , 'C']) , 'Alicuota IVA'] = 0
+        
+        # Si la 'Letra CBTE' es 'B' o 'C' entonces el 'Neto Gravado' es igual al 'Importe Total'
+        Compras_Ordenado.loc[Compras_Ordenado['Letra CBTE'].isin(['B' , 'C']) , 'Neto Gravado'] = Compras_Ordenado['Importe Total']
+
+        # Renombrar columnas de Compras_Ordenado a: 'Fecha Emisión ' , 'Fecha Recepción' , 'Cpbte' , 'Tipo' , 'Suc.' , 'Número' , 'Razón Social/Denominación Proveedor' , 'Tipo Doc.' , 'CUIT' , 'Domicilio' , 'C.P.' , 'Pcia' , 'Cond Fisc' , 'Cód. Neto' , 'Neto Gravado' , 'Alíc.' , 'IVA Liquidado' , 'IVA Crédito' , 'Cód. NG/EX' , 'Conceptos NG/EX' , 'Cód. P/R' , 'Perc./Ret.' , 'Pcia P/R' , 'Total'
+        Compras_Ordenado.rename(columns={'Fecha de Emisión': 'Fecha Emisión ' , 'Fecha de Recepción': 'Fecha Recepción' , 'Tipo CBTE': 'Cpbte' , 'Letra CBTE': 'Tipo' , 'Punto de Venta': 'Suc.' , 'Número de Comprobante': 'Número' , 'Denominación Vendedor': 'Razón Social/Denominación Proveedor' , 'Tipo Doc. Vendedor': 'Tipo Doc.' , 'Nro. Doc. Vendedor': 'CUIT' , 'Código Provincia': 'Pcia' , 'Tipo Responsable': 'Cond Fisc' , 'Importe IVA': 'IVA Liquidado' , 'CF Computable': 'IVA Crédito' , 'NG + E': 'Conceptos NG/EX' , 'RETPER': 'Perc./Ret.' , 'Importe Total': 'Total' , 'C.P':'C.P.' , 'Alicuota IVA':'Alíc.'} , inplace=True)
+
         # Obtener la ubicación de i
         Nombre_Archivo = str(i).split("/")[-1]
         Path = str(i).replace(Nombre_Archivo , "")
