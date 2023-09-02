@@ -110,7 +110,11 @@ Compras_Ordenado.loc[duplicates, ['NG + E', 'RETPER']] = 0
 # Ordenar por 'Nro. Doc. Vendedor', 'Punto de Venta' y 'Número de Comprobante'
 Compras_Ordenado.sort_values(by=['Nro. Doc. Vendedor' , 'Punto de Venta' , 'Número de Comprobante'] , inplace=True)
 
-# Exportar a Resultado.CSV
-Compras.to_csv("Resultado.CSV" , index=False , sep=";" , decimal=",")
-Compras_Ordenado.to_csv("Resultado-Ordenado.CSV" , index=False , sep=";" , decimal=",")
+# Renomrar las columnas de Provincias y Tipo_DOC a sus nombres originales
+Provincias.rename(columns={'Código Provincia': 'Código '} , inplace=True)
 
+# Exportar Compras_Ordenado, Provincias y Tipo_Doc a Excel XLS
+with pd.ExcelWriter('Compras.xls') as writer:
+    Compras_Ordenado.to_excel(writer, sheet_name='HWCompra-modelo', index=False)
+    Provincias.to_excel(writer, sheet_name='Provincias', index=False)
+    Tipo_DOC.to_excel(writer, sheet_name='Tipo Doc.', index=False)
