@@ -92,16 +92,19 @@ Compras['C.P'] = np.nan
 Compras['Cód. Neto'] = "CMG"
 Compras ['CF Computable'] = Compras['Importe IVA']
 Compras['Cód. NG/EX'] = "NGC"
-Compras['NG + E'] = Compras['Importe No Gravado'] + Compras['Importe Exento']
+Compras['NG + E'] = Compras['Importe No Gravado'] + Compras['Importe Exento'] + Compras['Otros Tributos']
 Compras['Cód. P/R'] = np.nan
 Compras['RETPER'] = Compras['Importe de Percepciones de Ingresos Brutos'] + Compras['Importe de Percepciones o Pagos a Cuenta de IVA']
 Compras['Pcia P/R'] = Compras['Código Provincia']
 
 # Reordenar columnas en otro DataFrame
 Columnas_Exportar = ['Fecha de Emisión' , 'Fecha de Recepción' , 'Tipo CBTE' , 'Letra CBTE' , 'Punto de Venta' , 'Número de Comprobante' , 'Denominación Vendedor' , 'Tipo Doc. Vendedor' , 'Nro. Doc. Vendedor' , 'Domicilio' , 'C.P' , 'Código Provincia' , 'Tipo Responsable' , 'Cód. Neto' , 'Neto Gravado' , 'Alicuota IVA' , 'Importe IVA' , 'CF Computable' , 'Cód. NG/EX' , 'NG + E' , 'Cód. P/R' , 'RETPER' , 'Pcia P/R' , 'Importe Total'  ]
-Comrpas_Ordernado = Compras[Columnas_Exportar]
+Compras_Ordenado = Compras[Columnas_Exportar]
+
+# Ordenar por 'Nro. Doc. Vendedor', 'Punto de Venta' y 'Número de Comprobante'
+Compras_Ordenado.sort_values(by=['Nro. Doc. Vendedor' , 'Punto de Venta' , 'Número de Comprobante'] , inplace=True)
 
 # Exportar a Resultado.CSV
 Compras.to_csv("Resultado.CSV" , index=False , sep=";" , decimal=",")
-Comrpas_Ordernado.to_csv("Resultado-Ordenado.CSV" , index=False , sep=";" , decimal=",")
+Compras_Ordenado.to_csv("Resultado-Ordenado.CSV" , index=False , sep=";" , decimal=",")
 
