@@ -101,6 +101,12 @@ Compras['Pcia P/R'] = Compras['Código Provincia']
 Columnas_Exportar = ['Fecha de Emisión' , 'Fecha de Recepción' , 'Tipo CBTE' , 'Letra CBTE' , 'Punto de Venta' , 'Número de Comprobante' , 'Denominación Vendedor' , 'Tipo Doc. Vendedor' , 'Nro. Doc. Vendedor' , 'Domicilio' , 'C.P' , 'Código Provincia' , 'Tipo Responsable' , 'Cód. Neto' , 'Neto Gravado' , 'Alicuota IVA' , 'Importe IVA' , 'CF Computable' , 'Cód. NG/EX' , 'NG + E' , 'Cód. P/R' , 'RETPER' , 'Pcia P/R' , 'Importe Total'  ]
 Compras_Ordenado = Compras[Columnas_Exportar]
 
+# Encuentra las filas duplicadas basadas en las columnas especificadas
+duplicates = Compras_Ordenado.duplicated(subset=['Tipo CBTE', 'Punto de Venta', 'Número de Comprobante', 'Nro. Doc. Vendedor'])
+
+# Utiliza loc para asignar 0 a las filas duplicadas en 'NG + E' y 'RETPER'
+Compras_Ordenado.loc[duplicates, ['NG + E', 'RETPER']] = 0
+
 # Ordenar por 'Nro. Doc. Vendedor', 'Punto de Venta' y 'Número de Comprobante'
 Compras_Ordenado.sort_values(by=['Nro. Doc. Vendedor' , 'Punto de Venta' , 'Número de Comprobante'] , inplace=True)
 
