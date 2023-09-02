@@ -87,7 +87,21 @@ Compras = pd.merge(Compras ,
 Compras.drop('CUIT' , axis=1 , inplace=True)
 del Proveedores
 
+Compras['Fecha de Recepción'] = Compras['Fecha de Emisión']
+Compras['C.P'] = np.nan
+Compras['Cód. Neto'] = "CMG"
+Compras ['CF Computable'] = Compras['Importe IVA']
+Compras['Cód. NG/EX'] = "NGC"
+Compras['NG + E'] = Compras['Importe No Gravado'] + Compras['Importe Exento']
+Compras['Cód. P/R'] = np.nan
+Compras['RETPER'] = Compras['Importe de Percepciones de Ingresos Brutos'] + Compras['Importe de Percepciones o Pagos a Cuenta de IVA']
+Compras['Pcia P/R'] = Compras['Código Provincia']
+
+# Reordenar columnas en otro DataFrame
+Columnas_Exportar = ['Fecha de Emisión' , 'Fecha de Recepción' , 'Tipo CBTE' , 'Letra CBTE' , 'Punto de Venta' , 'Número de Comprobante' , 'Denominación Vendedor' , 'Tipo Doc. Vendedor' , 'Nro. Doc. Vendedor' , 'Domicilio' , 'C.P' , 'Código Provincia' , 'Tipo Responsable' , 'Cód. Neto' , 'Neto Gravado' , 'Alicuota IVA' , 'Importe IVA' , 'CF Computable' , 'Cód. NG/EX' , 'NG + E' , 'Cód. P/R' , 'RETPER' , 'Pcia P/R' , 'Importe Total'  ]
+Comrpas_Ordernado = Compras[Columnas_Exportar]
 
 # Exportar a Resultado.CSV
-#Compras.to_csv("Resultado.CSV" , index=False , sep=";" , decimal=",")
+Compras.to_csv("Resultado.CSV" , index=False , sep=";" , decimal=",")
+Comrpas_Ordernado.to_csv("Resultado-Ordenado.CSV" , index=False , sep=";" , decimal=",")
 
