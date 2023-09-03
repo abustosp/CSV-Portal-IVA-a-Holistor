@@ -17,11 +17,11 @@ def Carpeta():
 
 def Abrir_Excel():
     import os
-    os.system("start EXCEL.EXE Lista-Archivos.xlsx")
+    os.system("start EXCEL.EXE Lista-Archivos-Compras.xlsx")
     
 def Procesar_Excel():
     import pandas as pd
-    df = pd.read_excel("Lista-Archivos.xlsx")
+    df = pd.read_excel("Lista-Archivos-Compras.xlsx")
     df = df[df['Raiz'].notna()]
     Archivos = df['Lista'].tolist()
     Procesar_CSV(Archivos)
